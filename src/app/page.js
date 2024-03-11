@@ -50,15 +50,15 @@ export default function Home() {
       color={"#ffffff"}
       loading={loading}
     />
-    <div id="caseStudy">{caseStudy}</div>
+    {caseStudy && <div id="caseStudy" style={{border: "2px solid azure", padding: "10px", borderRadius: "12px"}}>{caseStudy}</div>}
     {caseStudy && <button style={{paddingInline: "50px", paddingBlock: "10px"}} onClick={handleReset}>Reset</button>}
     <div style={{display: "flex", justifyContent: "space-evenly", height: "25vh", flexDirection: "column", textAlign: "center"}}>
       <h3>References</h3>
-      <p>Doc 1: <a href="https://en.wikipedia.org/wiki/Apollo_program">Wikipedia</a></p>
-      <p>Doc 2: <a href="https://www.nasa.gov/wp-content/uploads/2023/04/sp-4029.pdf">Apollo By The Numbers</a></p>
-      <p>Doc 3: <a href="https://ntrs.nasa.gov/api/citations/19750013242/downloads/19750013242.pdf">Apollo Program Summary Report</a></p>
-      <p>Doc 4: <a href="https://ntrs.nasa.gov/api/citations/20040084534/downloads/20040084534.pdf">Apollo Retrospective</a></p>
-      <p>Doc 5: <a href="https://wdhb.com/wp-content/uploads/2021/05/Exploring-a-New-Frontier.pdf">Exploring A New Frontier</a></p>
+      <p><a href="https://en.wikipedia.org/wiki/Apollo_program">Wikipedia</a></p>
+      <p><a href="https://www.nasa.gov/wp-content/uploads/2023/04/sp-4029.pdf">Apollo By The Numbers</a></p>
+      <p><a href="https://ntrs.nasa.gov/api/citations/19750013242/downloads/19750013242.pdf">Apollo Program Summary Report</a></p>
+      <p><a href="https://ntrs.nasa.gov/api/citations/20040084534/downloads/20040084534.pdf">Apollo Retrospective</a></p>
+      <p><a href="https://wdhb.com/wp-content/uploads/2021/05/Exploring-a-New-Frontier.pdf">Exploring A New Frontier</a></p>
     </div>
     </main>
   );

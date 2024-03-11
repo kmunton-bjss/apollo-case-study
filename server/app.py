@@ -36,14 +36,14 @@ def make_case_study(lens):
         messages=[
             {
                 "role": "system", "content": f"You're an expert in the role of {lens}. " + 
-                  "You are excellent at creating case studies that are structured with headings and multiple paragraphs. " +
-                  "You are very knowledgeable about the Apollo program."
+                  "You are very knowledgeable about the Apollo program. " + 
+                  "You are good at creating case studies with the structure introduction, problem/goal, solution, results/benefits and a final summary section."
             },
             {
-                "role": "user", "content": f"Tell me about the Apollo program from a {lens} point of view"
+                "role": "user", "content": f"Create a case study about the Apollo program for {lens} roles."
             },
         ],
-        temperature=1,
+        temperature=0.5,
         extra_body={
             "dataSources": [
               {
