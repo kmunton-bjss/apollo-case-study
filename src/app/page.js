@@ -6,8 +6,10 @@ export default function Home() {
   const [lens, setLens] = useState('Software / Hardware Engineering')
   const [caseStudy, setCaseStudy] = useState("")
 
-  const handleSubmit = () => {
-    setCaseStudy(lens)
+  const handleSubmit = async () => {
+    const res = await fetch(`http://localhost:5000/case-study?lens=${encodeURI(lens)}`)
+    const json = await res.json()
+    setCaseStudy(json["text"])
   }
 
   const handleReset = () => {
