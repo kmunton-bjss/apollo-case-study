@@ -7,16 +7,25 @@ export default function Home() {
   const [lens, setLens] = useState('Software / Hardware Engineering')
   const [caseStudy, setCaseStudy] = useState("")
   const [loading, setLoading] = useState(false)
+  const [disable, setDisable] = useState(false)
 
   const handleSubmit = async () => {
+    setDisable(true)
     setLoading(true)
-    const res = await fetch(`http://localhost:5000/case-study?lens=${encodeURI(lens)}`)
-    const json = await res.json()
-    setCaseStudy(json["text"])
+    try {
+      const res = await fetch(`http://localhost:5000/case-study?lens=${encodeURI(lens)}`)
+      const json = await res.json()
+      setCaseStudy(json)
+    } catch {
+      setDisable(false)
+      setLoading(false)
+      console.log("error fetching case study")
+    }
   }
 
   const handleReset = () => {
     setCaseStudy("")
+    setDisable(false)
   }
 
   useEffect(() => {
@@ -26,7 +35,7 @@ export default function Home() {
   }, [caseStudy])
   return (
     <main className={styles.main}>
-      <h1>Create Apollo Case Study</h1>
+      <h1>Apollo Case Study</h1>
       <div>
         <div style={{display: "flex", justifyContent: "space-evenly", height: "25vh", flexDirection: "column"}}>
           <p style={{textAlign: "center"}}>Select a lens for the case study</p>
@@ -36,6 +45,7 @@ export default function Home() {
               setLens(e.target.value);
             }}
             style={{paddingInline: "50px", paddingBlock: "10px"}}
+            disabled={disable}
           >
             <option value="Software / Hardware Engineering">Software / Hardware Engineering</option>
             <option value="Project Management">Project Management</option>
@@ -43,15 +53,31 @@ export default function Home() {
             <option value="Finance / Financial Controller">Finance / Financial Controller</option>
           </select>
 
-          <button style={{paddingInline: "50px", paddingBlock: "10px"}} onClick={handleSubmit}>submit</button>
+          <button style={{paddingInline: "50px", paddingBlock: "10px"}} onClick={handleSubmit} disabled={disable}>Create</button>
         </div>
     </div>
     <BarLoader
       color={"#ffffff"}
       loading={loading}
     />
-    {caseStudy && <div id="caseStudy" style={{border: "2px solid azure", padding: "10px", borderRadius: "12px"}}>{caseStudy}</div>}
-    {caseStudy && <button style={{paddingInline: "50px", paddingBlock: "10px"}} onClick={handleReset}>Reset</button>}
+    {caseStudy &&
+       <div style={{display: "flex", justifyContent: "space-evenly", flexDirection: "column", minHeight: "100vh", textAlign: "center"}}>
+        <button style={{paddingInline: "50px", paddingBlock: "10px", marginInline: "25%"}} onClick={handleReset}>Start Again</button>
+        <div id="caseStudy" style={{border: "2px solid azure", padding: "10px", borderRadius: "12px"}}>
+          <h2>Introduction</h2>
+          <p>This case study is looking at the {lens.toLowerCase()} aspects of the Apollo program.</p>
+          <p>{caseStudy["introduction"]}</p>
+          <h2>Objectives / Goals</h2>
+          <p>{caseStudy["goal"]}</p>
+          <h2>Approach / Solution</h2>
+          <p>{caseStudy["solution"]}</p>
+          <h2>Result</h2>
+          <p>{caseStudy["result"]}</p>
+          <h2>Summary</h2>
+          <p>{caseStudy["conclusion"]}</p>
+        </div>
+      </div>
+    }
     <div style={{display: "flex", justifyContent: "space-evenly", height: "25vh", flexDirection: "column", textAlign: "center"}}>
       <h3>References</h3>
       <p><a href="https://en.wikipedia.org/wiki/Apollo_program">Wikipedia</a></p>
