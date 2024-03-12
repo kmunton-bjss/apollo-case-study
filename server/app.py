@@ -74,7 +74,8 @@ def analyse_case_study():
         model=openai_deployment, # model = "deployment_name".
         messages=[
             {
-                "role": "system", "content": "You are great at identifying the audience and roles a piece of text is intended for"
+                "role": "system", "content": "You are great at identifying the audience and job roles a piece of text is intended for." + 
+                "Especially identifying which of these four roles a text is intended for: software / hardware engineering, project management, general management or finance / financial controller."
             },
             {
                 "role": "user", "content": f"Identify the role this case study is intended for. Case study: {case_study}"
