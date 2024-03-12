@@ -102,8 +102,10 @@ def get_openai_response(prompt, detail=True):
                   "parameters": {
                       "endpoint": search_endpoint,
                       "key": search_key,
-                      "indexName": search_index_name
-                  }
+                      "indexName": search_index_name,
+                      "roleInformation": "You are given data about the Apollo program. Read them carefully and answer the queries.",
+                      "topNDocuments": 10 # Default is 5, but the pdf documents have been broken up into individual pages so increased this value
+                  },
               }
           ],
         },

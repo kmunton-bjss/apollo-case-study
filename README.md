@@ -38,5 +38,5 @@ In Azure the following resources need to be set up:
 
 - Azure OpenAI
 - Azure Storage Account, with data files uploaded to the container (Azure Blob Storage)
-- Azure AI Search
+- Azure AI Search - standard pricing (allows 4 million characters to be indexed per document in Blob storage)
 - Azure AI Services (multi account, same region as Azure AI Search)
