@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react'
-import BarLoader from "react-spinners/BarLoader";
+import React, {useState, useEffect} from "react"
+import BarLoader from "react-spinners/BarLoader"
 
-const CreateCaseStudy = ({ setCaseStudyString, baseUrl}) => {
-  const [lens, setLens] = useState('Software / Hardware Engineering')
-  const [caseStudy, setCaseStudy] = useState("")
+const CreateCaseStudy = ({ setCaseStudyString, baseUrl, setCaseStudy, caseStudy}) => {
+  const [lens, setLens] = useState("Software / Hardware Engineering")
   const [loadingCaseStudy, setLoadingCaseStudy] = useState(false)
   const [disableCreate, setDisableCreate] = useState(false)
 
@@ -42,7 +41,7 @@ const CreateCaseStudy = ({ setCaseStudyString, baseUrl}) => {
             <select
               value={lens}
               onChange={(e) => {
-                setLens(e.target.value);
+                setLens(e.target.value)
               }}
               style={{paddingInline: "50px", paddingBlock: "10px"}}
               disabled={disableCreate}

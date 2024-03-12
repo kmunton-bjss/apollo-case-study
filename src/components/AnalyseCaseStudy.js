@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react'
-import BarLoader from "react-spinners/BarLoader";
+import React, {useState, useEffect} from "react"
+import BarLoader from "react-spinners/BarLoader"
 
-const AnalyseCaseStudy = ({handleCaseStudyChange, baseUrl, caseStudyString}) => {
+const AnalyseCaseStudy = ({setCaseStudyString, baseUrl, caseStudyString}) => {
   const [role, setRole] = useState("")
   const [loadingRole, setLoadingRole] = useState(false)
   const [disableAnalysis, setDisableAnalysis] = useState(false)
@@ -33,7 +33,7 @@ const AnalyseCaseStudy = ({handleCaseStudyChange, baseUrl, caseStudyString}) => 
   return (
     <>
       <h1>Analyse Case Study</h1>
-      <textarea value={caseStudyString} onChange={handleCaseStudyChange} placeholder="Enter case study..." style={{width: "90vw", height: "50vh"}} disabled={disableAnalysis}></textarea>
+      <textarea value={caseStudyString} onChange={(e) => setCaseStudyString(e.target.value)} placeholder="Enter case study..." style={{width: "90vw", height: "50vh"}} disabled={disableAnalysis}></textarea>
       <button style={{paddingInline: "50px", paddingBlock: "10px", marginInline: "25%"}} onClick={handleRoleIdentification} disabled={disableAnalysis}>Identify Role</button>
       <BarLoader
         color={"#ffffff"}
