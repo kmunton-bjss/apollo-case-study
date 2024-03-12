@@ -6,8 +6,14 @@ load_dotenv()
 
 openai_endpoint = os.getenv("OPENAI_ENDPOINT")
 openai_deployment = os.getenv("OPENAI_DEPLOYMENT")
-client = AzureOpenAI(
+clientWithExtension = AzureOpenAI(
     base_url=f"{openai_endpoint}/openai/deployments/{openai_deployment}/extensions",
+    api_key=os.getenv("OPENAI_API_KEY"),
+    api_version="2023-08-01-preview"
+)
+
+client = AzureOpenAI(
+    azure_endpoint=openai_endpoint,
     api_key=os.getenv("OPENAI_API_KEY"),
     api_version="2023-08-01-preview"
 )
@@ -45,7 +51,7 @@ questions = {
     "result": {
       "software / hardware engineering": "Did they overcome the software, hardware and scientific challenges and was the Apollo program success? Why?",
       "project management": "Did they overcome the project management challenges and was the Apollo program a success? Why?",
-      "general management": "Was the Apollo program a success generally? Why?",
+      "general management": "Was the Apollo program a success generally? Explain why?",
       "finance / financial controller": "Did they meet the financial goals of the Apollo program or was it over the budget? Why?"
     }
 }
@@ -59,32 +65,44 @@ def server():
 @app.get("/case-study")
 def get_case_study():
     lens = request.args.get("lens")
-    response = make_response(make_case_study(lens.lower()))
+    return get_response(make_case_study(lens.lower()))
+
+@app.post("/analyse")
+def analyse_case_study():
+    case_study = request.get_json(force=True)["caseStudy"]
+    completion = client.chat.completions.create(
+        model=openai_deployment, # model = "deployment_name".
+        messages=[
+            {
+                "role": "system", "content": "You are great at identifying the audience and roles a piece of text is intended for"
+            },
+            {
+                "role": "user", "content": f"Identify the role this case study is intended for. Case study: {case_study}"
+            },
+        ]
+    )
+
+    return get_response({"role": completion.choices[0].message.content})
+
+
+def get_response(data):
+    response = make_response(data)
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
 
-
 def make_case_study(lens):
     result = {
-        "introduction": "",
-        "goal": get_openai_response(questions["goal"][lens]),
-        "solution":  get_openai_response(questions["solution"][lens]),
-        "result":  get_openai_response(questions["result"][lens]),
-        "conclusion": ""   
+        "introduction": get_openai_response_using_own_data("Write a concise introduction about the Apollo program", detail=False),
+        "goal": get_openai_response_using_own_data(questions["goal"][lens] + " Only state the objectives, not how it was achieved."),
+        "solution":  get_openai_response_using_own_data(questions["solution"][lens]),
+        "conclusion":  get_openai_response_using_own_data(questions["result"][lens])  
     }
-
-    introduction_prompt = f"Write a concise introduction about the Apollo program"
-    result["introduction"] = get_openai_response(introduction_prompt, detail=False)
-
-    conclusion_prompt = f"Summarize the following: {result['goal']} {result['solution']} {result['result']}"
-    result["conclusion"] = get_openai_response(conclusion_prompt, detail=False)
 
     return result
 
-
-def get_openai_response(prompt, detail=True):
+def get_openai_response_using_own_data(prompt, detail=True):
     detail_prompt = " Go into detail and specifics."
-    completion = client.chat.completions.create(
+    completion = clientWithExtension.chat.completions.create(
         model=openai_deployment, # model = "deployment_name".
         messages=[
             {
