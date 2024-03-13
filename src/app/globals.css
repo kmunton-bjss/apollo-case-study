@@ -87,12 +87,6 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
 
 a {
@@ -107,4 +101,11 @@ a {
 
 button {
   cursor: pointer;
+}
+
+pre {
+  max-width: 90vw;
+  overflow: hidden;
+  float: left;
+  white-space: pre-wrap;
 }

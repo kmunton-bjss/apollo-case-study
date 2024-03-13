@@ -45,7 +45,8 @@ questions = {
           " How were the general hurdles of moon landing overcome?",
       "finance / financial controller": "How much did the Apollo program cost in total?" +
           " Where did the funding for the Apollo program come from?" +
-          " What was the breakdown of the costs for the Apollo program?" +
+          " What was the breakdown of the costs for the Apollo program i.e. how much was used for human resources," +
+          " how much was used for material resources etc?" +
           " What was the most expensive  and least expensive part of the program?"
     },
     "result": {
@@ -75,7 +76,8 @@ def analyse_case_study():
         messages=[
             {
                 "role": "system", "content": "You are great at identifying the audience and job roles a piece of text is intended for." + 
-                "Especially identifying which of these four roles a text is intended for: software / hardware engineering, project management, general management or finance / financial controller."
+                "Especially identifying which of these four roles a text is intended for: " + 
+                "software / hardware engineering, project management, general management or finance / financial controller."
             },
             {
                 "role": "user", "content": f"Identify the role this case study is intended for. Case study: {case_study}"
@@ -102,7 +104,7 @@ def make_case_study(lens):
     return result
 
 def get_openai_response_using_own_data(prompt, detail=True):
-    detail_prompt = " Go into detail and specifics."
+    detail_prompt = " Go into detail and specifics and break it down into paragraphs."
     completion = clientWithExtension.chat.completions.create(
         model=openai_deployment, # model = "deployment_name".
         messages=[
@@ -122,6 +124,7 @@ def get_openai_response_using_own_data(prompt, detail=True):
                       "endpoint": search_endpoint,
                       "key": search_key,
                       "indexName": search_index_name,
+                      "inScope": True, # true means only use own data
                       "roleInformation": "You are given data about the Apollo program. Read them carefully and answer the queries.",
                       "topNDocuments": 10 # Default is 5, but the pdf documents have been broken up into individual pages so increased this value
                   },

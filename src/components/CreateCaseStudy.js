@@ -65,13 +65,13 @@ const CreateCaseStudy = ({ setCaseStudyString, baseUrl, setCaseStudy, caseStudy}
             <div id="caseStudy" style={{border: "2px solid azure", padding: "10px", borderRadius: "12px"}}>
               <h2>Introduction</h2>
               <p>This case study is looking at the {lens.toLowerCase()} aspects of the Apollo program.</p>
-              <p>{caseStudy["introduction"]}</p>
+              <pre><p>{caseStudy["introduction"]}</p></pre>
               <h2>Objectives / Goals</h2>
-              <p>{caseStudy["goal"]}</p>
+              <pre><p>{caseStudy["goal"]}</p></pre>
               <h2>Approach / Solution</h2>
-              <p>{caseStudy["solution"]}</p>
+              <pre><p>{caseStudy["solution"]}</p></pre>
               <h2>Conclusion</h2>
-              <p>{caseStudy["conclusion"]}</p>
+              <pre><p>{caseStudy["conclusion"]}</p></pre>
             </div>
           
           </div>
