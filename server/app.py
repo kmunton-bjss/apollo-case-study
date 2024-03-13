@@ -103,7 +103,7 @@ def make_case_study(lens):
 
 def get_openai_response_using_own_data(prompt, detail=True):
     detail_prompt = " Go into detail and specifics."
-    completion = client.chat.completions.create(
+    completion = clientWithExtension.chat.completions.create(
         model=openai_deployment, # model = "deployment_name".
         messages=[
             {
