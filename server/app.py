@@ -1,4 +1,4 @@
-import os, sys
+import os
 from flask import Flask, request, make_response
 from openai import AzureOpenAI
 from dotenv import load_dotenv
@@ -103,7 +103,7 @@ def make_case_study(lens):
 
 def get_openai_response_using_own_data(prompt, detail=True):
     detail_prompt = " Go into detail and specifics."
-    completion = clientWithExtension.chat.completions.create(
+    completion = client.chat.completions.create(
         model=openai_deployment, # model = "deployment_name".
         messages=[
             {

@@ -40,3 +40,9 @@ In Azure the following resources need to be set up:
 - Azure Storage Account, with data files uploaded to the container (Azure Blob Storage)
 - Azure AI Search - standard pricing (allows 4 million characters to be indexed per document in Blob storage)
 - Azure AI Services (multi account, same region as Azure AI Search)
+
+
+## Troubleshooting
+
+- If getting 401 error, double check the API key is not already set on the terminal you are running the Flask server from. Use the `unset` command.
+
